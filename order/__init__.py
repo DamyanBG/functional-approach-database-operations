@@ -9,7 +9,12 @@ from common.request import (
     process_database_request_decoupled,
 )
 from common.extract_data import extract_data_from_body
-from common.database import database_connect, execute_query, insert_query_builder
+from common.database import (
+    database_connect,
+    execute_query,
+    insert_query_builder,
+    save_insert_query_builder,
+)
 from .extract_data import (
     extract_post_order_data,
     extract_post_order_data_decoupled,
@@ -43,14 +48,18 @@ def _post_order_lambda_decoupled(req: func.HttpRequest) -> func.HttpResponse:
         ),
         lambda order_data: execute_query(
             database_connect,
-            insert_query_builder(
+            save_insert_query_builder(
                 "orders",
-                ["name", "customer_name", "quantity"],
-                [
+                (
+                    "name",
+                    "customer_name",
+                    "quantity",
+                ),
+                (
                     order_data["name"],
                     order_data["customer_name"],
                     order_data["quantity"],
-                ],
+                ),
             ),
             lambda cursor: cursor.fetchone(),
         ),
