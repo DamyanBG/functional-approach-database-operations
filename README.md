@@ -76,7 +76,7 @@ def _post_order_curry_decoupled(req: func.HttpRequest) -> func.HttpResponse:
 ## The last approachs is using higher order decoupled functions.
 
 ### using decoupled process func
-def _post_order_decoupled(req: func.HttpRequest) -> func.HttpResponse:
+```def _post_order_decoupled(req: func.HttpRequest) -> func.HttpResponse:
     response = process_database_request_decoupled(
         req,
         lambda req: req.get_json(),
@@ -92,3 +92,4 @@ def _post_order_decoupled(req: func.HttpRequest) -> func.HttpResponse:
     )
 
     return response
+```
